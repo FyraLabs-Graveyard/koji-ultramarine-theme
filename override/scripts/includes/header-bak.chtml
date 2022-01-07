@@ -3,15 +3,16 @@
 #from kojiweb import util
 #from koji_cli.lib import greetings
 #import random
-<!DOCTYPE html>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
 #def greeting()
 #echo $random.choice($greetings)##slurp
 #end def
 
-<html lang="en">
+<html xmlns="http://www.w3.org/1999/xhtml">
   <head>
-    <meta charset="utf-8">
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
     <title>$title | $siteName</title>
     <link rel="shortcut icon" href="$util.themePath('images/koji.ico')"/>
     <link rel="stylesheet" type="text/css" media="screen" title="Koji Style" href="$util.themePath('koji.css')"/>
@@ -28,7 +29,7 @@
           <img src="$util.themePath('images/koji.png')" alt="Koji Logo" id="kojiLogo"/>
 #set $localnavpath=$util.themePath("extra-nav.html", local=True)
 #if os.path.exists($localnavpath)
-#set $localnav="".join(open($localnavpath).readlines())
+#set $localnav="".join(open($localnavpath, 'rt', encoding='utf-8').readlines())
 $localnav
 #end if
           <form action="search" id="headerSearch">
@@ -54,37 +55,38 @@ $localnav
                 #set $old_terms = ""
             #end try
             <input type="text" name="terms" title="You can use glob expressions here (e.g. 'bash-*')" value="$old_terms"/>
-            <input class="btn btn-primary" type="submit" value="Search"/>
+            <input type="submit" value="Search"/>
           </form>
-          <span id="loginInfo">
-            $koji.formatTimeLong($currentDate)
-            #if not $LoginDisabled
-             |
-            #if $currentUser
-            $greeting(), <a href="userinfo?userID=$currentUser.id">$currentUser.name</a> | <a href="logout">logout</a>
-            #else
-            <a href="login">login</a>
-            #end if
-            #end if
-          </span>
         </div><!-- end header -->
 
         <!-- MAIN NAVIGATION -->
         <div id="mainNav">
           <h4 class="hide">Main Site Links:</h4>
-          <ul class="nav">
-            <li class="btn btn-primary" id="summaryTab"><a class="btn btn-primary" href="index">Summary</a></li>
-            <li class="btn btn-primary" id="packagesTab"><a class="btn btn-primary" href="packages">Packages</a></li>
-            <li class="btn btn-primary" id="buildsTab"><a class="btn btn-primary" href="builds">Builds</a></li>
-            <li class="btn btn-primary" id="tasksTab"><a class="btn btn-primary" href="tasks">Tasks</a></li>
-            <li class="btn btn-primary" id="tagsTab"><a class="btn btn-primary" href="tags">Tags</a></li>
-            <li class="btn btn-primary" id="buildtargetsTab"><a class="btn btn-primary" href="buildtargets">Build Targets</a></li>
-            <li class="btn btn-primary" id="usersTab"><a class="btn btn-primary" href="users">Users</a></li>
-            <li class="btn btn-primary" id="hostsTab"><a class="btn btn-primary" href="hosts">Hosts</a></li>
-            <li class="btn btn-primary" id="reportsTab"><a class="btn btn-primary" href="reports">Reports</a></li>
-            <li class="btn btn-primary" id="searchTab"><a class="btn btn-primary" href="search">Search</a></li>
-            <li class="btn btn-primary" id="apiTab"><a class="btn btn-primary" href="api">API</a></li>
+          <ul>
+            <li id="summaryTab"><a href="index">Summary</a></li>
+            <li id="packagesTab"><a href="packages">Packages</a></li>
+            <li id="buildsTab"><a href="builds">Builds</a></li>
+            <li id="tasksTab"><a href="tasks">Tasks</a></li>
+            <li id="tagsTab"><a href="tags">Tags</a></li>
+            <li id="buildtargetsTab"><a href="buildtargets">Build Targets</a></li>
+            <li id="usersTab"><a href="users">Users</a></li>
+            <li id="hostsTab"><a href="hosts">Hosts</a></li>
+            <li id="reportsTab"><a href="reports">Reports</a></li>
+            <li id="searchTab"><a href="search">Search</a></li>
+            <li id="apiTab"><a href="api">API</a></li>
           </ul>
         </div><!-- end mainNav -->
+
+        <span id="loginInfo">
+          $koji.formatTimeLong($currentDate)
+          #if not $LoginDisabled
+           |
+          #if $currentUser
+          $greeting(), <a href="userinfo?userID=$currentUser.id">$currentUser.name</a> | <a href="logout">logout</a>
+          #else
+          <a href="login">login</a>
+          #end if
+          #end if
+        </span>
 
         <div id="content">

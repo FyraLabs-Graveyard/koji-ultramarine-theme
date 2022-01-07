@@ -1,0 +1,241 @@
+#encoding UTF-8
+#import koji
+#from kojiweb import util
+#from koji_cli.lib import greetings
+#import random
+<!DOCTYPE html>
+
+#def greeting()
+#echo $random.choice($greetings)##slurp
+#end def
+
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <title>$title | $siteName</title>
+  <link rel="shortcut icon" href="$util.themePath('images/koji.ico')" />
+  <link rel="stylesheet" type="text/css" media="screen" title="Koji Style" href="$util.themePath('koji.css')" />
+  <link rel="alternate stylesheet" type="text/css" media="screen" title="Debug" href="$util.themePath('debug.css')" />
+  <link rel="alternate" type="application/rss+xml" title="Koji: recent builds" href="/koji/recentbuilds" />
+  <!-- START FONTAWESOME PART-->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css"
+    integrity="sha512-HK5fgLBL+xu6dm/Ii3z4xhlSUyZgTT9tuc/hSrtw6uzJOvgRr2a9jyxxT1ely+B+xFAmJKVSTbpM/CuL7qxO8w=="
+    crossorigin="anonymous" />
+  <script src="https://cdnjs.cloudflare.com/ajax/libsfont-awesome/5.15.2/js/all.min.js"
+    integrity="sha512-UwcC/iaz5ziHX7V6LjSKaXgCuRRqbTp1QHpbOJ4l1nw2/boCfZ2KlFIqBUA/uRVF0onbREnY9do8rM/uT/ilqw=="
+    crossorigin="anonymous"></script>
+  <!-- END FONTAWESOME PART-->
+
+</head>
+
+<body id="$pageID">
+  <div id="header">
+    <nav class="navbar is-light" role="navigation" aria-label="main navigation" style="border-radius:3px;">
+      <div class="navbar-brand" style="max-height:100%;">
+        <a class="navbar-item" href="index">
+          <img src="$util.themePath('images/koji.png')" alt="Ultramarine Build System"
+            style="max-height:100%;">
+        </a>
+        <a role="button" class="navbar-burger" id="hamburg" aria-label="menu" aria-expanded="false">
+          <span aria-hidden="true"></span>
+          <span aria-hidden="true"></span>
+          <span aria-hidden="true"></span>
+        </a>
+      </div>
+      <div id="navbarstuff" class="navbar-menu">
+
+        <div class="navbar-start" id="navbar-start">
+          <div class="navbar-item has-dropdown is-hoverable">
+            <a class="navbar-link">
+              Menu
+            </a>
+    
+            <div class="navbar-dropdown" id="navbar-dropdown">
+            </div>
+          </div>
+        </div>
+
+        <div class="navbar-end" id="navbar-end">
+          <div class="navbar-item">
+            <form action="search" id="headerSearch">
+                      
+
+              <div class="field has-addons">
+                <p class="control">
+                  <span class="select">
+                    <select name="type">
+                      <option $util.toggleSelected($self, $type, "package") value="package">Packages</option>
+                      <option $util.toggleSelected($self, $type, "build") value="build">Builds</option>
+                      <option $util.toggleSelected($self, $type, "tag") value="tag">Tags</option>
+                      <option $util.toggleSelected($self, $type, "target") value="target">Build Targets</option>
+                      <option $util.toggleSelected($self, $type, "user") value="user">Users</option>
+                      <option $util.toggleSelected($self, $type, "host") value="host">Hosts</option>
+                      <option $util.toggleSelected($self, $type, "rpm") value="rpm">RPMs</option>
+                    </select>
+                  </span>
+                </p>
+                <p class="control">
+                  
+                  #try
+                    #set $old_terms = util.escapeHTML($terms)
+                  #except
+                    #set $old_terms = ""
+                  #end try
+                  <input class="input" type="text" name="terms" value="$old_terms" placeholder="Search Terms...">
+                </p>
+                #if not $varExists('match')
+                  #set $match='glob'
+                #end if
+                <p class="control">
+                  <span class="select">
+                    <select name="match">
+                      <option $util.toggleSelected($self, $match, "glob", True) value="glob">glob</option>
+                      <option $util.toggleSelected($self, $match, "regexp", True) value="regexp">RegEx</option>
+                      <option $util.toggleSelected($self, $match, "exact", True) value="exact">Exact Match</option>
+                    </select>
+                  </span>
+                </p>
+                
+                <p class="control">
+                    <a type="submit" id="headerSearchSubmit" class="button"><i class="fas fa-search"></i></a>
+                </p>
+                <p>
+                  <!--
+              <input type="radio" name="match" value="glob" $util.toggleSelected($self, $match, "glob", True) id="radioglob"/><abbr title="? will match any single character, * will match any sequence of zero or more characters" id="abbrglob">glob</abbr>
+              <input type="radio" name="match" value="regexp" $util.toggleSelected($self, $match, "regexp", True) id="radioregexp"/><abbr title="full POSIX regular expressions" id="abbrregexp">regexp</abbr>
+              <input type="radio" name="match" value="exact" $util.toggleSelected($self, $match, "exact", True) id="radioexact"/><abbr title="exact matches only" id="abbrexact">exact</abbr>
+      -->
+                </p>
+              </div>
+            </form>
+          </div>
+          <!--
+          $koji.formatTimeLong($currentDate)-->
+          #if not $LoginDisabled
+          
+          #if $currentUser
+          $greeting(), $currentUser.name
+          
+          <div class="navbar-item">
+            <a href="userinfo?userID=$currentUser.id"><button class="button is-danger">Log out</button></a>
+          </div>
+          #else
+          <div class="navbar-item">
+            <a href="login"><button class="button is-primary">Log in</button></a>
+          </div>
+          #end if
+          #end if
+        </div>
+
+      </div>
+
+
+    </nav>
+    <div id="wrap" class="container">
+      <div id="innerwrap">
+
+</div>
+
+
+
+
+        <!-- HEADER -->
+
+        <!--
+          <img src="$util.themePath('images/koji.png')" alt="Koji Logo" id="kojiLogo"/>
+          <form action="search" id="headerSearch">
+            <input type="hidden" name="match" value="glob"/>
+            <select name="type">
+              <option $util.toggleSelected($self, $type, "package") value="package">Packages</option>
+              <option $util.toggleSelected($self, $type, "build") value="build">Builds</option>
+              <option $util.toggleSelected($self, $type, "tag") value="tag">Tags</option>
+              <option $util.toggleSelected($self, $type, "target") value="target">Build Targets</option>
+              <option $util.toggleSelected($self, $type, "user") value="user">Users</option>
+              <option $util.toggleSelected($self, $type, "host") value="host">Hosts</option>
+              <option $util.toggleSelected($self, $type, "rpm") value="rpm">RPMs</option>
+              #if $mavenEnabled
+              <option $util.toggleSelected($self, $type, "maven") value="maven">Maven Artifacts</option>
+              #end if
+              #if $winEnabled
+              <option $util.toggleSelected($self, $type, "win") value="win">Windows Artifacts</option>
+              #end if
+            </select>
+            #try
+                #set $old_terms = util.escapeHTML($terms)
+            #except
+                #set $old_terms = ""
+            #end try
+            <input type="text" name="terms" title="You can use glob expressions here (e.g. 'bash-*')" value="$old_terms"/>
+            <input class="btn btn-primary" type="submit" value="Search"/>
+          </form>-->
+          <!--
+        <span id="loginInfo">
+          $koji.formatTimeLong($currentDate)
+          #if not $LoginDisabled
+          |
+          #if $currentUser
+          $greeting(), <a href="userinfo?userID=$currentUser.id">$currentUser.name</a> | <a href="logout">logout</a>
+          #else
+          <a href="login">login</a>
+          #end if
+          #end if
+        </span>-->
+      <!-- end header -->
+
+      <!-- MAIN NAVIGATION 
+      <div id="mainNav">
+        <h4 class="hide">Main Site Links:</h4>
+
+        <div class="columns mx-0 is-flex-touch is-flex-desktop" id="navbarthing" style="overflow-x : auto;">
+            
+          </div>
+          
+          <ul class="nav">
+            
+            <li class="btn btn-primary" id="summaryTab"><a class="btn btn-primary" href="index">Summary</a></li>
+            <li class="btn btn-primary" id="packagesTab"><a class="btn btn-primary" href="packages">Packages</a></li>
+            <li class="btn btn-primary" id="buildsTab"><a class="btn btn-primary" href="builds">Builds</a></li>
+            <li class="btn btn-primary" id="tasksTab"><a class="btn btn-primary" href="tasks">Tasks</a></li>
+            <li class="btn btn-primary" id="tagsTab"><a class="btn btn-primary" href="tags">Tags</a></li>
+            <li class="btn btn-primary" id="buildtargetsTab"><a class="btn btn-primary" href="buildtargets">Build Targets</a></li>
+            <li class="btn btn-primary" id="usersTab"><a class="btn btn-primary" href="users">Users</a></li>
+            <li class="btn btn-primary" id="hostsTab"><a class="btn btn-primary" href="hosts">Hosts</a></li>
+            <li class="btn btn-primary" id="reportsTab"><a class="btn btn-primary" href="reports">Reports</a></li>
+            <li class="btn btn-primary" id="searchTab"><a class="btn btn-primary" href="search">Search</a></li>
+            <li class="btn btn-primary" id="apiTab"><a class="btn btn-primary" href="api">API</a></li>
+          </ul>
+      </div> end mainNav -->
+      <br>
+      <div id="content">
+        <script>
+          var pairOfDoom = {
+            "index": "Summary",
+            "packages": "Packages",
+            "builds": "Builds",
+            "tasks": "Tasks",
+            "tags": "Tags",
+            "buildtargets": "Build Targets",
+            "users": "Users",
+            "hosts": "Hosts",
+            "reports": "Reports",
+            "search": "Search",
+            "api": "API"
+          };
+          //console.log(document.getElementById("navbarthing").innerHTML)
+          /*
+                    <div class="column fa-pull-left mx-2"><a href="index">
+                      <button class="button is-primary is-rounded is-fullwidth">Summary</button></a></div>*/
+          var navbarlol = document.getElementById("navbar-dropdown");
+          for (var tab in pairOfDoom) {
+            navbarlol.innerHTML += '<a class="navbar-item" href="' + tab + '">' + pairOfDoom[tab] + '</a>'
+            //console.log(tab);
+          }
+          document.getElementById("hamburg").addEventListener("click", () => {
+            document.getElementById("hamburg").classList.toggle("is-active");
+            document.getElementById("navbarstuff").classList.toggle("is-active");
+          })
+          document.getElementById("headerSearchSubmit").onclick = function() {
+            document.getElementById("headerSearch").submit();
+        } 
+        </script>

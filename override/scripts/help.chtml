@@ -1,0 +1,70 @@
+#include "includes/header.chtml"
+#import koji
+
+#encoding UTF-8
+#import koji
+#import random
+
+#def luck()
+#echo $random.randint(0, 50)##slurp
+#end def
+#if $luck == "50"
+<iframe width="420" height="315"src="https://www.youtube.com/embed/yD2FSwTy2lw?autoplay=1&start=0"></iframe><a href="https://gitlab.ultramarine-linux.org/"><h1>Contribute now!</h1></a>
+#else
+
+<!-- Actual help page below -->
+
+<h3>Welcome to the Lapis Build System for Ultramarine Linux and RPM-based distros!</h3>
+<p>
+  This is the documentation for the Lapis Build System for Ultramarine Linux and other RPM-based distros.
+  This documentation is intended to be used by developers and package maintainers to help them get used to the Lapis Build System (LBS) and Koji.
+  This documentation is not intended to be used by end users. If you'd like contribute to the project, you've come to the right place!
+</p>
+
+<h2 href="#intro" >
+    Introduction to Koji
+</h2>
+<p>
+    Koji is the official build system for Fedora. It is used to build packages, images, and various other artifacts for Fedora.
+    This documentation will go through the basics of using Koji and the LBS.
+</p>
+
+<h2 href="#lapis">
+    The Lapis Build System
+</h2>
+
+<p>
+    Lapis is a (planned and work in progress) customized fork of Koji that is used for Ultramarine Linux. It is designed for ease of use with developers and package maintainers.
+    It allows you to build RPMs and other artifacts for Fedora and other RPM-based distros such as the Enterprise Linux families (RHEL, CentOS, etc.), OpenSUSE, OpenMandriva, Mageia, and others.
+    and also allow for the creation of packages for other distros using containers, and allows for a rather easier method to set up an instance for.
+    <br>
+    Lapis was created from the various frutstrations of setting up a working Koji instance, and its comparisons to the Arch User Repository (AUR) from the Arch Linux community.
+
+</p>
+<p>
+    Currently the Lapis Build System is in a very early stage of development. And is simply just a custom web instance of Koji.
+    We're looking for contributors to help us out with the development of the Lapis Build System. And we're also looking for package maintainers and release engineers to help us out with the development of Ultramarine Linux.
+</p>
+
+<h2 href="#koji-info">
+    How Koji works
+</h2>
+<p>
+    Koji works by using Mock to create chroots for each build. This allows you to build packages in an isolated environment.
+    Mock is a tool to create reproducible RPMs by creating a chroot environment with only the packages you need for building your package, and then building the package in that environment.
+    This allows you to build packages in a reproducible environment.
+    There are also extensions to Koji that allows you to create a Yum/DNF repository for said packages, and even custom OS images.
+</p>
+
+<h2 href="planned-features">
+    Planned Features
+</h2>
+<li>Easier configuration by uploading Mock config files instead of manually bootstrapping the chroot.</li>
+<li>A Graphical editor for Mock config files.</li>
+<li>Ability to use Docker (or Podman) to create images (and repos) for other distros.</li>
+<li>A Graphical package group (comps.xml) editor.</li>
+<li>A Graphical Admin menu</li>
+
+#end if
+
+#include "includes/footer.chtml"

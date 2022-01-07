@@ -1,11 +1,5 @@
-# koji theme
+# Ultramarine Koji Theme
 
-This is for the koji build system theme. It is open for improvement.
+This is the theme for Ultramarine Linux's Koji instance. A complete redesign of the default Koji Web UI made with [Bulma](https://bulma.io/).
 
-```
-include/header.chtml -> This file will replace the RPM-provided one as there is
-                        no other proper way of handling it inside of a theme.
-```
-
-This contains modifications to [koji](https://pagure.io/koji) where necessary.
-Our changes are licensed under the LGPL, just like koji.
+Set the theme in your Koji Web configuration and symlink the override/scripts folder to `/usr/share/koji-web/scripts/`, then symlink override/util.py to `/usr/share/koji-web/lib/kojiweb/util.py`.
